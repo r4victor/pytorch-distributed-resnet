@@ -53,12 +53,6 @@ def main():
     # Each process runs on 1 GPU device specified by the local_rank argument.
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument(
-        "--local_rank",
-        type=int,
-        help=
-        "Local rank. Necessary for using the torch.distributed.launch utility."
-    )
     parser.add_argument("--num_epochs",
                         type=int,
                         help="Number of training epochs.",
@@ -88,7 +82,7 @@ def main():
                         help="Resume training from saved checkpoint.")
     argv = parser.parse_args()
 
-    local_rank = argv.local_rank
+    local_rank = int(os.environ["LOCAL_RANK"])
     num_epochs = argv.num_epochs
     batch_size = argv.batch_size
     learning_rate = argv.learning_rate
